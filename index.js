@@ -40,6 +40,12 @@ async function run() {
 
     const coffeeCollection = client.db('coffeeDB').collection('allCoffees');
 
+    app.get('/coffees', async(req, res) => {
+      const coffees = coffeeCollection.find();
+      const result =  await coffees.toArray();
+      res.send(result)
+    })
+
 
     app.post( '/addCoffee', async(req, res) => {
       const newCoffee = req.body;
@@ -68,4 +74,5 @@ run().catch(console.dir);
 app.listen( port , () => {
     console.log(`Our Coffee shop server is Running on the PORT: ${port}`);
 })
+
 
