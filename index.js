@@ -39,6 +39,13 @@ async function run() {
     await client.connect();
 
 
+    app.post( '/addCoffee', async(req, res) => {
+      const newCoffee = req.body;
+
+      const coffeeCollections = client.db('coffeesDB').collection('allCoffees');
+      const result = await coffeeCollections.insertOne(newCoffee);
+      res.send(result)
+    })
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -60,3 +67,4 @@ run().catch(console.dir);
 app.listen( port , () => {
     console.log(`Our Coffee shop server is Running on the PORT: ${port}`);
 })
+
